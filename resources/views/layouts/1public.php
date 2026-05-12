@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', 'NutriBase')</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=Lora:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        leaf: '#16A34A',
+                        leafLight: '#22C55E',
+                        leafPale: '#DCFCE7',
+                        ink: '#0A1A0F',
+                        mist: '#F0FDF4',
+                        sage: '#6B8F72',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --leaf: #16A34A;
+            --leaf-light: #22C55E;
+            --leaf-vivid: #4ADE80;
+            --leaf-pale: #DCFCE7;
+            --ink: #0A1A0F;
+            --sage: #6B8F72;
+            --border: rgba(22,163,74,0.15);
+            --radius: 18px;
+            --white: #FAFFFE;
+            --mist: #F0FDF4;
+            --glow: rgba(74,222,128,0.25);
+        }
+
+        
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--white);
+            color: var(--ink);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ── NAV ── */
+        .nb-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 999;
+            transition: background .4s ease, box-shadow .4s ease, border-color .4s ease;
+        }
+
+        .nb-nav.scrolled {
+            background: rgba(250,255,254,0.88);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            box-shadow: 0 1px 0 rgba(22,163,74,0.08), 0 4px 24px rgba(0,0,0,0.04);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nb-nav-inner {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* ── LOGO — NO BORDER/BOX, just icon + text ── */
+        .nb-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .nb-logo:hover { transform: translateY(-1px); opacity: 0.85; }
+
+        .nb-logo-img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            /* no background, no border, no pill */
+        }
+
+        .nb-logo-text {
+            font-size: 19px;
+            font-weight: 800;
+            color: var(--ink);
+            letter-spacing: -0.04em;
+            line-height: 1;
+        }
+
+        .nb-logo-text span { color: var(--leaf); }
+
+        /* ── NAV LINKS ── */
+        .nb-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nb-nav-link {
+            font-size: 14px;
+            font-weight: 500;
+            color: #3D6647;
+            text-decoration: none;
+            padding: 7px 14px;
+            border-radius: 8px;
+            transition: background .18s, color .18s;
+            position: relative;
+        }
+
+        .nb-nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 4px; left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 16px; height: 2px;
+            background: var(--leaf);
+            border-radius: 2px;
+            transition: transform .2s ease;
+        }
+
+        .nb-nav-link:hover { background: var(--leaf-pale); color: var(--leaf); }
+        .nb-nav-link:hover::after { transform: translateX(-50%) scaleX(1); }
+        .nb-nav-link.active { color: var(--leaf); font-weight: 600; }
+        .nb-nav-link.active::after { transform: translateX(-50%) scaleX(1); }
+
+        .nb-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: var(--leaf);
+            color: white;
+            font-size: 13.5px;
+            font-weight: 700;
+            padding: 9px 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: background .2s, transform .2s, box-shadow .2s;
+            letter-spacing: -0.01em;
+            margin-left: 8px;
+            box-shadow: 0 2px 12px rgba(22,163,74,0.25);
+        }
+
+        .nb-cta:hover {
+            background: #15803D;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(22,163,74,0.35);
+        }
+
+        /* ── MOBILE MENU ── */
+        .nb-hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+        }
+
+        .nb-hamburger span {
+            display: block;
+            width: 22px; height: 2px;
+            background: var(--ink);
+            border-radius: 2px;
+            margin: 5px 0;
+            transition: all .25s;
+        }
+
+        .nb-mobile-menu {
+            display: none;
+            flex-direction: column;
+            padding: 12px 20px 20px;
+            border-top: 1px solid var(--border);
+            background: white;
+            gap: 2px;
+        }
+
+        .nb-mobile-menu.open { display: flex; }
+
+        .nb-mobile-link {
+            font-size: 14px;
+            color: #3A5A42;
+            text-decoration: none;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .nb-mobile-link:hover { background: var(--leaf-pale); color: var(--leaf); }
+
+        /* ── FOOTER ── */
+        .nb-footer {
+            background: var(--ink);
+            color: rgba(255,255,255,.5);
+            margin-top: 120px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nb-footer::before {
+            content: '';
+            position: absolute;
+            top: -120px; right: -80px;
+            width: 500px; height: 400px;
+            background: radial-gradient(circle, rgba(22,163,74,0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .nb-footer-inner {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 64px 24px 32px;
+            position: relative;
+        }
+
+        .nb-footer-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .nb-footer-brand h2 {
+            color: white;
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -0.03em;
+        }
+
+        .nb-footer-brand h2 span { color: var(--leaf-vivid); }
+
+        .nb-footer-brand p {
+            font-size: 13.5px;
+            line-height: 1.8;
+            max-width: 280px;
+        }
+
+        .nb-footer-nav h4 {
+            color: white;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .nb-footer-nav a {
+            display: block;
+            font-size: 13.5px;
+            color: rgba(255,255,255,.45);
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color .15s, transform .15s;
+        }
+
+        .nb-footer-nav a:hover { color: rgba(255,255,255,.9); transform: translateX(3px); }
+
+        .nb-footer-bottom {
+            border-top: 1px solid rgba(255,255,255,.07);
+            padding-top: 24px;
+            font-size: 12.5px;
+            text-align: center;
+        }
+
+        /* ── MAIN ── */
+        main { padding-top: 72px; min-height: 100vh; }
+
+        @media (max-width: 768px) {
+            .nb-nav-links { display: none; }
+            .nb-hamburger { display: block; }
+            .nb-footer-grid { grid-template-columns: 1fr; gap: 32px; }
+        }
+
+        /* ── PAGE ENTER ANIMATION ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(22px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        .anim-enter {
+            opacity: 0;
+            animation: fadeUp .6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .anim-enter-1 { animation-delay: .05s; }
+        .anim-enter-2 { animation-delay: .14s; }
+        .anim-enter-3 { animation-delay: .24s; }
+        .anim-enter-4 { animation-delay: .34s; }
+        .anim-enter-5 { animation-delay: .44s; }
+
+        /* ── SHARED COMPONENTS ── */
+        .nb-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: linear-gradient(135deg, var(--leaf-pale), rgba(255,255,255,0.8));
+            border: 1px solid rgba(22,163,74,.2);
+            border-radius: 100px;
+            padding: 5px 14px 5px 9px;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--leaf);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .nb-badge-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--leaf);
+            box-shadow: 0 0 0 3px rgba(22,163,74,0.2);
+            animation: pulse-dot 2s ease infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { box-shadow: 0 0 0 3px rgba(22,163,74,0.2); }
+            50% { box-shadow: 0 0 0 5px rgba(22,163,74,0.08); }
+        }
+
+        .nb-section-heading {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(2rem, 4.5vw, 3rem);
+            font-weight: 800;
+            color: var(--ink);
+            line-height: 1.1;
+            letter-spacing: -0.04em;
+        }
+
+        .nb-section-heading em {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            color: var(--leaf);
+        }
+
+        .nb-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: box-shadow .3s ease, transform .3s ease, border-color .3s ease;
+        }
+
+        .nb-card:hover {
+            box-shadow: 0 12px 40px rgba(22,163,74,0.12);
+            transform: translateY(-3px);
+            border-color: rgba(22,163,74,0.25);
+        }
+
+        .nb-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 12px 22px;
+            border-radius: 11px;
+            text-decoration: none;
+            transition: all .25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            letter-spacing: -0.01em;
+        }
+
+        .nb-btn-primary {
+            background: linear-gradient(135deg, var(--leaf), #15803D);
+            color: white;
+            box-shadow: 0 4px 16px rgba(22,163,74,0.3);
+        }
+
+        .nb-btn-primary:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 10px 28px rgba(22,163,74,0.4);
+        }
+
+        .nb-btn-ghost {
+            background: white;
+            color: var(--ink);
+            border: 1.5px solid var(--border);
+        }
+
+        .nb-btn-ghost:hover {
+            border-color: var(--leaf);
+            color: var(--leaf);
+            background: var(--leaf-pale);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+
+<nav class="nb-nav" id="navbar">
+    <div class="nb-nav-inner">
+        {{-- Logo: icon + text, NO pill/box/border --}}
+        <a href="{{ route('home') }}" class="nb-logo">
+            <img src="{{ asset('favicon.ico') }}" alt="NutriBase Logo" class="nb-logo-img">
+            <span class="nb-logo-text">Nutri<span>Base</span></span>
+        </a>
+
+        {{-- Desktop Links --}}
+        <div class="nb-nav-links">
+            <a href="{{ route('home') }}" class="nb-nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Beranda</a>
+            <a href="{{ route('tentang') }}" class="nb-nav-link {{ request()->routeIs('tentang') ? 'active' : '' }}">Tentang</a>
+            <a href="{{ route('kontak') }}" class="nb-nav-link {{ request()->routeIs('kontak') ? 'active' : '' }}">Kontak</a>
+            <a href="{{ route('login') }}" class="nb-cta">
+                <i class="bi bi-box-arrow-in-right"></i> Masuk
+            </a>
+        </div>
+
+        {{-- Mobile Button --}}
+        <button class="nb-hamburger" id="menu-toggle" aria-label="Buka menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+
+    {{-- Mobile Menu --}}
+    <div class="nb-mobile-menu" id="mobile-menu">
+        <a href="{{ route('home') }}" class="nb-mobile-link">Beranda</a>
+        <a href="{{ route('tentang') }}" class="nb-mobile-link">Tentang</a>
+        <a href="{{ route('kontak') }}" class="nb-mobile-link">Kontak</a>
+        <a href="{{ route('login') }}" class="nb-mobile-link" style="color:var(--leaf);font-weight:700;">Masuk →</a>
+    </div>
+</nav>
+
+<main>
+    @yield('content')
+</main>
+
+<footer class="nb-footer">
+    <div class="nb-footer-inner">
+        <div class="nb-footer-grid">
+            <div class="nb-footer-brand">
+                <h2>Nutri<span>Base</span></h2>
+                <p>Sistem pengelolaan program makanan bergizi yang modern, efisien, dan transparan untuk Indonesia.</p>
+            </div>
+            <div class="nb-footer-nav">
+                <h4>Halaman</h4>
+                <a href="{{ route('home') }}">Beranda</a>
+                <a href="{{ route('tentang') }}">Tentang</a>
+                <a href="{{ route('kontak') }}">Kontak</a>
+            </div>
+        </div>
+        <div class="nb-footer-bottom">© {{ date('Y') }} NutriBase — Platform MBG Indonesia</div>
+    </div>
+</footer>
+
+<script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 30);
+    });
+
+    const toggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const bars = toggle.querySelectorAll('span');
+
+    toggle.addEventListener('click', () => {
+        const open = mobileMenu.classList.toggle('open');
+        if (open) {
+            bars[0].style.transform = 'translateY(7px) rotate(45deg)';
+            bars[1].style.opacity = '0';
+            bars[2].style.transform = 'translateY(-7px) rotate(-45deg)';
+        } else {
+            bars.forEach(b => { b.style.transform = ''; b.style.opacity = ''; });
+        }
+    });
+</script>
+</body>
+</html>
