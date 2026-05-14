@@ -8,14 +8,15 @@
 </p>
 
 ## Cara memakai Project
-<li>1. Copy link ssh project</li>
-<li>2. buka terminal dan ketikkan git clone {link ssh project}</li>
-<li>3. buka root project di vs code</li>
-<li>4. pastikan telah mengunduh laravel dan php</li>
-<li>5. di terminal, ketik composer install dan tunggu selesai</li>
-<li>6. kemudian ketik php artisan migrate:fresh</li>
-<li>7. Lalu php artisan db:seed</li>
-<li>8. Terakhir ketik php artisan serve dan buka project</li>
 
-Note: List users ada di userSeeder.php
+1. Copy link SSH project
+2. Buka terminal dan ketikkan `git clone {link ssh project}`
+3. Buka root project di VS Code
+4. Pastikan telah mengunduh Laravel dan PHP
+5. Di terminal, ketik `composer install` dan tunggu sampai selesai
+6. Kemudian ketik `php artisan migrate:fresh`
+7. Lalu jalankan `php artisan db:seed`
+8. Jalankan juga `php artisan storage:link`
+9. Terakhir ketik `php artisan serve` dan buka project di browser
 
+> **Note:** List users ada di file `userSeeder.php`
