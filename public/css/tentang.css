@@ -6,8 +6,8 @@
 .page-section {
     position: relative;
     overflow: hidden;
-    padding: 80px 0 120px;
-    background: linear-gradient(160deg, #f0fdf4 0%, #dcfce7 45%, #bbf7d0 100%);
+    padding: 72px 0 100px;
+    background: var(--public-bg);
 }
 
 /* Blobs */
@@ -19,17 +19,17 @@
 }
 
 .pg-blob-1 {
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(74,222,128,0.3) 0%, transparent 70%);
-    top: -150px; right: -100px;
-    animation: pgBlob1 9s ease-in-out infinite;
+    width: 420px; height: 420px;
+    background: radial-gradient(circle, rgba(13,110,53,0.03) 0%, transparent 70%);
+    top: -130px; right: -80px;
+    animation: pgBlob1 13s ease-in-out infinite;
 }
 
 .pg-blob-2 {
-    width: 350px; height: 350px;
-    background: radial-gradient(circle, rgba(22,163,74,0.15) 0%, transparent 70%);
-    bottom: 100px; left: -80px;
-    animation: pgBlob2 11s ease-in-out infinite;
+    width: 260px; height: 260px;
+    background: radial-gradient(circle, rgba(13,110,53,0.02) 0%, transparent 70%);
+    bottom: 60px; left: -60px;
+    animation: pgBlob2 15s ease-in-out infinite;
 }
 
 @keyframes pgBlob1 {
@@ -51,7 +51,7 @@
 }
 
 /* ── PAGE HEADER ── */
-.page-header { margin-bottom: 64px; }
+.page-header { margin-bottom: 56px; text-align:left; }
 
 .page-header h1 {
     font-size: clamp(2.2rem, 5vw, 3.4rem);
@@ -83,7 +83,7 @@
 .content-block {
     background: rgba(255,255,255,0.85);
     backdrop-filter: blur(12px);
-    border: 1.5px solid rgba(22,163,74,0.12);
+    border: 1.5px solid rgba(14,165,255,0.08);
     border-radius: 22px;
     padding: 40px 44px;
     margin-bottom: 20px;
@@ -105,8 +105,8 @@
 }
 
 .content-block:hover {
-    box-shadow: 0 16px 48px rgba(22,163,74,0.1);
-    border-color: rgba(22,163,74,0.22);
+    box-shadow: 0 12px 40px rgba(14,165,255,0.06);
+    border-color: rgba(14,165,255,0.12);
     transform: translateY(-3px);
 }
 
@@ -128,7 +128,7 @@
     content: '';
     flex: 1;
     height: 1px;
-    background: linear-gradient(90deg, rgba(22,163,74,0.2), transparent);
+    background: linear-gradient(90deg, rgba(14,165,255,0.12), transparent);
 }
 
 .content-block h2 {
@@ -164,15 +164,15 @@
 }
 
 .goal-item:hover {
-    background: rgba(22,163,74,0.06);
-    border-color: rgba(22,163,74,0.15);
+    background: rgba(14,165,255,0.02);
+    border-color: rgba(14,165,255,0.08);
     transform: translateX(4px);
 }
 
 .goal-icon {
     width: 36px; height: 36px;
     border-radius: 10px;
-    background: linear-gradient(135deg, rgba(22,163,74,0.1), rgba(74,222,128,0.15));
+    background: linear-gradient(135deg, rgba(14,165,255,0.04), rgba(14,165,255,0.06));
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
     margin-top: 1px;
@@ -201,7 +201,7 @@
 .role-card {
     border-radius: 16px;
     padding: 24px 20px;
-    border: 1.5px solid rgba(22,163,74,0.1);
+    border: 1.5px solid rgba(14,165,255,0.08);
     background: var(--mist);
     transition: all .3s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
@@ -220,8 +220,8 @@
 
 .role-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 16px 40px rgba(22,163,74,0.15);
-    border-color: rgba(22,163,74,0.22);
+    box-shadow: 0 12px 36px rgba(14,165,255,0.06);
+    border-color: rgba(14,165,255,0.12);
     background: white;
 }
 

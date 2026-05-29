@@ -2,6 +2,9 @@
 @section('title', 'Kontak — NutriBase')
 
 @push('styles')
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&family=Fraunces:ital,wght@0,400;0,700;0,900;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/app-public.css') }}">
     <link rel="stylesheet" href="{{ asset('css/kontak.css') }}">
 @endpush
 
@@ -19,33 +22,12 @@
                 <span class="nb-badge-dot"></span> Hubungi Kami
             </div>
             <h1>Ada Pertanyaan atau<br><em>Ingin Bekerja Sama?</em></h1>
-            <p>Kami siap membantu Anda. Silakan hubungi kami melalui saluran komunikasi di bawah ini.</p>
-        </div>
+           </div>
 
         <div class="contact-grid">
 
-            {{-- Info Kontak --}}
-            <div class="info-container reveal">
-                <div class="info-card">
-                    <div class="info-item">
-                        <div class="info-icon"><i class="bi bi-geo-alt-fill"></i></div>
-                        <div>
-                            <p class="info-label">Lokasi Kantor</p>
-                            <p class="info-value">Subang, Jawa Barat, Indonesia</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon"><i class="bi bi-clock-fill"></i></div>
-                        <div>
-                            <p class="info-label">Jam Operasional</p>
-                            <p class="info-value">Senin – Jumat, 08.00 – 17.00 WIB</p>
-                        </div>
-                    </div>
-                </div>
+         
 
-                <div class="info-card info-card-highlight">
-                    <div class="info-item" style="margin-bottom:0;"></div>
-                </div>
 
                 {{-- Mini stats --}}
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;"></div>
@@ -60,7 +42,7 @@
                     <h3>Kirim Pesan Langsung</h3>
                     <p>Klik tombol di bawah untuk memulai percakapan dengan tim dukungan NutriBase di WhatsApp.</p>
 
-                    <a href="https://wa.me/qr/IWYYKL7WW422M1" target="_blank" class="wa-btn">
+                    <a href="https://wa.me/6281280260755" target="_blank" class="wa-btn">
                         <i class="bi bi-whatsapp"></i>
                         Hubungi via WhatsApp
                     </a>

@@ -4,6 +4,7 @@
 @push('styles')
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,700;1,9..144,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/app-public.css') }}">
     <link rel="stylesheet" href="{{ asset('css/beranda.css') }}">
 @endpush
 
@@ -44,29 +45,15 @@
         </div>
 
         {{-- Right --}}
+        
         <div class="lp-hero-visual">
-            <img src="{{ asset('storage/beranda/nutribase_hero_illustration.svg') }}"
-                 alt="Nutribase Hero Illustration">
+            <img src="{{ asset('nutribase_hero_illustration.png') }}" alt="Ilustrasi aplikasi NutriBase">
         </div>
+        
 
     </div>
 </section>
 
-{{-- ── MARQUEE ── --}}
-<div class="lp-marquee-wrap">
-    <div class="lp-marquee-track">
-        @for($i = 0; $i < 2; $i++)
-        <div class="lp-marquee-item"><i class="bi bi-patch-check-fill"></i>Manajemen Penerima</div>
-        <div class="lp-marquee-item"><i class="bi bi-truck"></i>Distribusi Real-time</div>
-        <div class="lp-marquee-item"><i class="bi bi-bar-chart-line"></i>Laporan & Analitik</div>
-        <div class="lp-marquee-item"><i class="bi bi-calendar3"></i>Jadwal & Menu</div>
-        <div class="lp-marquee-item"><i class="bi bi-shield-check"></i>Akses Berbasis Peran</div>
-        <div class="lp-marquee-item"><i class="bi bi-star-fill"></i>Ulasan Penerima</div>
-        <div class="lp-marquee-item"><i class="bi bi-graph-up-arrow"></i>Monitoring Stok</div>
-        <div class="lp-marquee-item"><i class="bi bi-people-fill"></i>Multi-user</div>
-        @endfor
-    </div>
-</div>
 
 {{-- ── FEATURES ── --}}
 <section class="lp-features">
@@ -155,35 +142,6 @@
     </div>
 </section>
 
-{{-- ── HOW IT WORKS ── --}}
-<section class="lp-how">
-    <div class="lp-section-inner">
-        <div class="lp-section-head reveal" style="justify-content:flex-start;">
-            <div>
-                <div class="lp-label"><span class="lp-label-dot"></span> Cara Kerja</div>
-                <h2 class="lp-h2">Tiga langkah,<br><em>satu alur kerja.</em></h2>
-            </div>
-        </div>
-
-        <div class="how-grid">
-            <div class="how-step reveal" style="transition-delay:.05s;">
-                <div class="how-num">01</div>
-                <h3>Kader Catat Distribusi</h3>
-                <p>Kader mencatat setiap distribusi beserta status — diterima, pending, atau gagal — langsung dari platform.</p>
-            </div>
-            <div class="how-step reveal" style="transition-delay:.15s;">
-                <div class="how-num">02</div>
-                <h3>Penerima Beri Ulasan</h3>
-                <p>Penerima membuka riwayat distribusinya dan memberikan rating serta ulasan atas bantuan yang diterima.</p>
-            </div>
-            <div class="how-step reveal" style="transition-delay:.25s;">
-                <div class="how-num">03</div>
-                <h3>Koordinator Pantau</h3>
-                <p>Koordinator memantau laporan menyeluruh, merespons ulasan, dan mengambil keputusan berbasis data nyata.</p>
-            </div>
-        </div>
-    </div>
-</section>
 
 {{-- ── CTA ── --}}
 <section class="lp-cta-wrap">
