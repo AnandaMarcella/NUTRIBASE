@@ -1,7 +1,7 @@
 {{-- resources/views/menu/index.blade.php --}}
 @extends('layouts.app')
 
-@section('title', 'Menu & Stok')
+@section('title', 'Menu & Stok - NutriBase')
 
 @section('content')
 
