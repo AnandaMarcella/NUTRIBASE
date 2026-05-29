@@ -1,7 +1,7 @@
 {{-- resources/views/penerima/index.blade.php --}}
 @extends('layouts.app')
 
-@section('title', 'Data Penerima')
+@section('title', 'Data Penerima — NutriBase')
 
 @section('content')
 

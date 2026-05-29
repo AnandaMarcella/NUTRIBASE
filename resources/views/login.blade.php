@@ -1,6 +1,6 @@
 {{-- LOGIN PAGE (MongoDB Style Inspired) --}}
 @extends('layouts.app')
-
+@section('title', 'Login — NutriBase')
 @section('content')
 <div class="min-h-screen flex items-center justify-center bg-[#001E2B] relative overflow-hidden">
 

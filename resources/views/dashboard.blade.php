@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Dashboard — NutriBase')
 @section('content')
 <div class="flex min-h-screen bg-gray-100">
 

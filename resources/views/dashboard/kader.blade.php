@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Dashboard Kader — NutriBase')
 @section('content')
 <div class="flex min-h-screen" style="background:#FAFCFB">
 

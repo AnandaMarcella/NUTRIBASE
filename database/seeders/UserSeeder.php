@@ -38,15 +38,7 @@ class UserSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-                        [
-                'name'       => 'Rina Nurmardiati',
-                'username'   => 'kader2',
-                'password'   => Hash::make('password'),
-                'role'       => 'kader',
-                'is_super'   => false,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+         
                         [
                 'name'       => 'Li Sunarti',
                 'username'   => 'kader3',
