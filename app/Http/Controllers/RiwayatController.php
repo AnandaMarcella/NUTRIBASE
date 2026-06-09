@@ -17,7 +17,7 @@ class RiwayatController extends Controller
 
         if (! $penerima) {
             return redirect()->route('penerima.create')
-                ->with('error', 'Profil penerima belum lengkap. Silakan isi identitas tambahan dahulu.');
+                ->with('error', 'Profil penerima belum lengkap. Silakan isi identitas terlebih dahulu.');
         }
 
         $query = Distribusi::with(['menu', 'kader', 'jadwal', 'feedback'])

@@ -19,10 +19,6 @@
 
         {{-- Left --}}
         <div>
-            <div class="lp-eyebrow">
-                <div class="lp-eyebrow-dot"></div>
-                Platform MBG Indonesia
-            </div>
 
             <h1 class="lp-hero-title">
                 Makanan Bergizi,<br>

@@ -40,7 +40,7 @@
                         <button type="submit" class="inline-flex items-center justify-center px-5 py-3 bg-[#06B13D] hover:bg-[#059933] text-white text-sm font-semibold rounded-2xl transition">
                             <i class="bi bi-check-lg mr-2"></i> Simpan Perubahan
                         </button>
-                        <a href="{{ route('penerima.show', $penerima) }}" class="inline-flex items-center justify-center px-5 py-3 border border-[#CCDFD4] text-[#4E6F5C] rounded-2xl hover:bg-[#F2F8F4] transition text-sm">
+                        <a href="{{ route('dashboard') }}" class="inline-flex items-center justify-center px-5 py-3 border border-[#CCDFD4] text-[#4E6F5C] rounded-2xl hover:bg-[#F2F8F4] transition text-sm">
                             Batal
                         </a>
                     </div>

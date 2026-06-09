@@ -40,12 +40,12 @@
                     <h2 class="font-bold text-gray-700 mb-1">Profil belum dibuat</h2>
                     <p class="text-sm text-gray-400">
                         Akun Anda terdaftar, namun data profil penerima belum dilengkapi.
-                        Silakan lengkapi data profil sendiri agar status bantuan dapat tampil.
+                        Silakan lengkapi data profil untuk melihat status distribusi.
                     </p>
                     <div class="mt-5">
                         <a href="{{ route('penerima.create') }}"
                            class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#06B13D] hover:bg-[#059933] text-white text-sm font-semibold rounded-xl transition">
-                            <i class="bi bi-pencil-square"></i> Lengkapi Profil Penerima
+                            <i class="bi bi-pencil-square"></i> Lengkapi Profil
                         </a>
                     </div>
                 </div>
@@ -81,9 +81,9 @@
                         </span>
                     </div>
 
-                    <div class="flex flex-wrap gap-2 mb-4">
+                    <div class="mb-4 flex gap-2">
                         <a href="{{ route('penerima.edit', $penerima) }}"
-                           class="inline-flex items-center gap-2 px-4 py-2 bg-[#06B13D] hover:bg-[#059933] text-white text-xs font-semibold rounded-full transition">
+                           class="inline-flex items-center gap-2 px-3 py-1.5 bg-[#06B13D] hover:bg-[#059933] text-white text-xs font-semibold rounded-lg transition">
                             <i class="bi bi-pencil-square"></i> Edit Profil
                         </a>
                     </div>
@@ -110,6 +110,7 @@
                             </div>
                         </div>
                     @endif
+
                 </div>
 
                 {{-- STATS --}}

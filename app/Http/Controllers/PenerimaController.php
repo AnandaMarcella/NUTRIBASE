@@ -12,10 +12,6 @@ class PenerimaController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->user()->isPenerima()) {
-            return redirect()->route('dashboard');
-        }
-
         $this->authorize('viewAny', Penerima::class);
 
         $query = Penerima::with('user')->latest();
@@ -172,6 +168,11 @@ class PenerimaController extends Controller
         }
 
         $penerima->update($validated);
+
+        if ($request->user()->isPenerima() && $penerima->user_id === $request->user()->id) {
+            return redirect()->route('dashboard')
+                ->with('success', 'Profil penerima berhasil diperbarui.');
+        }
 
         return redirect()->route('penerima.index')
             ->with('success', 'Data penerima berhasil diperbarui.');
