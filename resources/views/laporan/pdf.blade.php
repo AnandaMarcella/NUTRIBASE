@@ -5,11 +5,15 @@
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+
+    @page { margin: 20mm; }
+
     body {
         font-family: 'DejaVu Sans', Arial, sans-serif;
         font-size: 9px;
         color: #1a1a1a;
         background: #fff;
+        padding: 12mm 14mm;
     }
 
     /* ── Header ── */

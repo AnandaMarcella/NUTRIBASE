@@ -169,22 +169,53 @@
                              class="rounded-2xl px-4 py-3 text-sm {{ $isMe ? 'rounded-tr-sm' : 'rounded-tl-sm' }}"
                              style="{{ $isMe ? 'background:#D7F487;color:#2E3D33' : 'background:#F3F4F6;color:#374151' }}">
                             <p class="leading-relaxed">{{ $t->isi_tanggapan }}</p>
+                            @if($t->gambar)
+                            <div class="mt-3">
+                                <img src="{{ Storage::url($t->gambar) }}" alt="Foto tanggapan"
+                                     class="w-full max-h-64 object-cover rounded-xl border border-gray-200 cursor-pointer"
+                                     onclick="this.closest('dialog')?.showModal()"
+                                     x-data
+                                     @click="$refs.lightbox.showModal()">
+                                <dialog x-ref="lightbox"
+                                        class="rounded-2xl shadow-2xl p-0 backdrop:bg-black/70 max-w-3xl w-full"
+                                        @click="$el.close()">
+                                    <img src="{{ Storage::url($t->gambar) }}" alt="Foto tanggapan"
+                                         class="w-full h-auto rounded-2xl">
+                                </dialog>
+                            </div>
+                            @endif
                         </div>
 
                         {{-- Inline edit form --}}
                         @can('update', $t)
                         <form x-show="editing" action="{{ route('tanggapan.update', $t->id) }}" method="POST"
+                              enctype="multipart/form-data"
                               class="mt-1" style="display:none">
                             @csrf @method('PUT')
                             <textarea name="isi_tanggapan" rows="2" required
                                 class="w-full bg-white border border-green-300 rounded-xl px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-300 resize-none"
                                 >{{ $t->isi_tanggapan }}</textarea>
-                            <div class="flex gap-2 mt-1.5">
-                                <button type="submit"
-                                    class="text-xs font-semibold px-3 py-1.5 rounded-lg text-white transition"
-                                    style="background:#06B13D">Simpan</button>
-                                <button type="button" @click="editing = false"
-                                    class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition">Batal</button>
+
+                            @if($t->gambar)
+                            <div class="mt-2 mb-2">
+                                <img src="{{ Storage::url($t->gambar) }}" alt="Foto tanggapan"
+                                     class="h-24 rounded-xl object-cover border border-gray-200">
+                            </div>
+                            @endif
+
+                            <div class="flex items-center gap-3">
+                                <label class="flex items-center gap-2 px-3 py-2 rounded-xl border border-gray-200 bg-gray-50 text-sm text-gray-600 cursor-pointer hover:bg-gray-100 transition">
+                                    <i class="bi bi-camera-fill text-base"></i>
+                                    <span>Ganti foto</span>
+                                    <input type="file" name="gambar" accept="image/jpg,image/jpeg,image/png,image/webp" class="hidden">
+                                </label>
+                                <div class="flex gap-2 mt-1.5 ml-auto">
+                                    <button type="submit"
+                                        class="text-xs font-semibold px-3 py-1.5 rounded-lg text-white transition"
+                                        style="background:#06B13D">Simpan</button>
+                                    <button type="button" @click="editing = false"
+                                        class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition">Batal</button>
+                                </div>
                             </div>
                         </form>
                         @endcan
@@ -222,30 +253,36 @@
 
             {{-- ══ REPLY BOX ══ --}}
             <div class="bg-white rounded-2xl shadow p-4 sticky bottom-4">
-                <form action="{{ route('tanggapan.store') }}" method="POST" class="flex gap-3 items-end">
+                <form action="{{ route('tanggapan.store') }}" method="POST" enctype="multipart/form-data" class="space-y-3">
                     @csrf
                     <input type="hidden" name="feedback_id" value="{{ $feedback->id }}">
 
-                    <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0"
-                         style="background:#4E6F5C;color:#D7F487">
-                        {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
+                    <div class="flex gap-3 items-start">
+                        <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0"
+                             style="background:#4E6F5C;color:#D7F487">
+                            {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
+                        </div>
+
+                        <div class="flex-1">
+                            <textarea name="isi_tanggapan" rows="1" required
+                                placeholder="Tulis balasan..."
+                                onInput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"
+                                class="w-full bg-gray-100 rounded-xl px-3 py-2.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-300 transition resize-none overflow-hidden"
+                                style="min-height:40px;max-height:120px"></textarea>
+                        </div>
                     </div>
 
-                    <div class="flex-1">
-                        <textarea name="isi_tanggapan" rows="1" required
-                            placeholder="Tulis balasan..."
-                            onInput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"
-                            class="w-full bg-gray-100 rounded-xl px-3 py-2.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-300 transition resize-none overflow-hidden"
-                            style="min-height:40px;max-height:120px"></textarea>
+                    <div class="flex items-center gap-3">
+                        <label class="flex items-center gap-2 px-3 py-2 rounded-xl border border-gray-200 bg-gray-50 text-sm text-gray-600 cursor-pointer hover:bg-gray-100 transition">
+                            <i class="bi bi-camera-fill text-base"></i>
+                            <span>Pilih foto</span>
+                            <input type="file" name="gambar" accept="image/jpg,image/jpeg,image/png,image/webp" class="hidden">
+                        </label>
+                        <button type="submit"
+                            class="ml-auto inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold text-white bg-green-600 hover:bg-green-700 transition">
+                            Kirim
+                        </button>
                     </div>
-
-                    <button type="submit"
-                        class="w-10 h-10 flex items-center justify-center rounded-xl text-white transition flex-shrink-0"
-                        style="background:#06B13D">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/>
-                        </svg>
-                    </button>
                 </form>
             </div>
 

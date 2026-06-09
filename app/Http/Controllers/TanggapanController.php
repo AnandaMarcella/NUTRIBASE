@@ -15,6 +15,7 @@ class TanggapanController extends Controller
         $validated = $request->validate([
             'feedback_id'   => ['required', 'exists:feedback,id'],
             'isi_tanggapan' => ['required', 'string', 'max:2000'],
+            'gambar'        => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
 
         // ✅ FIX: Jika yang membalas adalah penerima, pastikan feedback_id
@@ -34,6 +35,10 @@ class TanggapanController extends Controller
 
         $validated['user_id'] = $request->user()->id;
 
+        if ($request->hasFile('gambar')) {
+            $validated['gambar'] = $request->file('gambar')->store('tanggapan', 'public');
+        }
+
         Tanggapan::create($validated);
 
         return redirect()->route('feedback.show', $validated['feedback_id'])
@@ -46,7 +51,15 @@ class TanggapanController extends Controller
 
         $validated = $request->validate([
             'isi_tanggapan' => ['required', 'string', 'max:2000'],
+            'gambar'        => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
+
+        if ($request->hasFile('gambar')) {
+            if ($tanggapan->gambar) {
+                \Storage::disk('public')->delete($tanggapan->gambar);
+            }
+            $validated['gambar'] = $request->file('gambar')->store('tanggapan', 'public');
+        }
 
         $tanggapan->update($validated);
 
@@ -57,6 +70,10 @@ class TanggapanController extends Controller
     public function destroy(Tanggapan $tanggapan)
     {
         $this->authorize('delete', $tanggapan);
+
+        if ($tanggapan->gambar) {
+            \Storage::disk('public')->delete($tanggapan->gambar);
+        }
 
         $feedbackId = $tanggapan->feedback_id;
         $tanggapan->delete();

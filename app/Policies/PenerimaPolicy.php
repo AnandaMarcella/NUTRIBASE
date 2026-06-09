@@ -21,12 +21,12 @@ class PenerimaPolicy
 
     public function create(User $user): bool
     {
-        return $user->isKader();
+        return $user->isKader() || $user->isPenerima();
     }
 
     public function update(User $user, Penerima $penerima): bool
     {
-        return $user->isKader();
+        return $user->isKader() || ($user->isPenerima() && $penerima->user_id === $user->id);
     }
 
     public function delete(User $user, Penerima $penerima): bool

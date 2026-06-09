@@ -15,7 +15,10 @@ class RiwayatController extends Controller
 
         $penerima = $user->penerimaProfile;
 
-        abort_if(!$penerima, 404, 'Profil penerima tidak ditemukan.');
+        if (! $penerima) {
+            return redirect()->route('penerima.create')
+                ->with('error', 'Profil penerima belum lengkap. Silakan isi identitas tambahan dahulu.');
+        }
 
         $query = Distribusi::with(['menu', 'kader', 'jadwal', 'feedback'])
             ->where('penerima_id', $penerima->id)

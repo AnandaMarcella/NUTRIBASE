@@ -12,6 +12,10 @@ class PenerimaController extends Controller
 {
     public function index(Request $request)
     {
+        if ($request->user()->isPenerima()) {
+            return redirect()->route('dashboard');
+        }
+
         $this->authorize('viewAny', Penerima::class);
 
         $query = Penerima::with('user')->latest();
@@ -42,10 +46,20 @@ class PenerimaController extends Controller
         return view('penerima.index', compact('penerima')); //,'stats'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
         $this->authorize('create', Penerima::class);
-        // tidak dipakai — modal langsung dari index
+
+        if ($request->user()->isPenerima()) {
+            if ($request->user()->penerimaProfile) {
+                return redirect()->route('dashboard')
+                    ->with('error', 'Profil penerima Anda sudah lengkap.');
+            }
+
+            return view('penerima.create');
+        }
+
+        // Kader membuat melalui halaman Data Penerima
         return redirect()->route('penerima.index');
     }
 
@@ -67,23 +81,32 @@ class PenerimaController extends Controller
         if ($validated['kategori'] === 'lainnya' && blank($validated['deskripsi_kategori'] ?? null)) {
             return back()
                 ->withErrors(['deskripsi_kategori' => 'Wajib diisi untuk kategori Lainnya.'])
-                ->withInput()
-                ->with('open_modal', 'create');
+                ->withInput();
         }
 
-        $base = Str::slug($validated['name'], '.');
-        $username = $base;
-        $i = 1;
-        while (User::where('username', $username)->exists()) {
-            $username = $base . $i++;
-        }
+        if ($request->user()->isPenerima()) {
+            if ($request->user()->penerimaProfile) {
+                return redirect()->route('dashboard')
+                    ->with('error', 'Profil penerima Anda sudah ada.');
+            }
 
-        $user = User::create([
-            'name'     => $validated['name'],
-            'username' => $username,
-            'password' => bcrypt($validated['nik']),
-            'role'     => 'penerima',
-        ]);
+            $user = $request->user();
+            $user->update(['name' => $validated['name']]);
+        } else {
+            $base = Str::slug($validated['name'], '.');
+            $username = $base;
+            $i = 1;
+            while (User::where('username', $username)->exists()) {
+                $username = $base . $i++;
+            }
+
+            $user = User::create([
+                'name'     => $validated['name'],
+                'username' => $username,
+                'password' => bcrypt($validated['nik']),
+                'role'     => 'penerima',
+            ]);
+        }
 
         Penerima::create([
             'user_id'            => $user->id,
@@ -96,8 +119,19 @@ class PenerimaController extends Controller
             'estimasi_durasi'    => $validated['estimasi_durasi'],
         ]);
 
+        if ($request->user()->isPenerima()) {
+            return redirect()->route('dashboard')
+                ->with('success', 'Profil penerima berhasil dibuat.');
+        }
+
         return redirect()->route('penerima.index')
-            ->with('success', "Penerima {$user->name} ditambahkan. Username: {$username}");
+            ->with('success', "Penerima {$user->name} ditambahkan. Username: {$user->username}");
+    }
+
+    public function edit(Penerima $penerima)
+    {
+        $this->authorize('update', $penerima);
+        return view('penerima.edit', compact('penerima'));
     }
 
     public function show(Penerima $penerima)
@@ -105,13 +139,6 @@ class PenerimaController extends Controller
         $this->authorize('view', $penerima);
         $penerima->load(['user', 'distribusis.menu', 'feedbacks']);
         return view('penerima.show', compact('penerima'));
-    }
-
-    public function edit(Penerima $penerima)
-    {
-        $this->authorize('update', $penerima);
-        // tidak dipakai — modal langsung dari index via data-* attributes
-        return redirect()->route('penerima.index');
     }
 
     public function update(Request $request, Penerima $penerima)

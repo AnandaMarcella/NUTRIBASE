@@ -69,8 +69,8 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->route('dashboard')
-            ->with('success', 'Akun berhasil dibuat! Selamat datang.');
+        return redirect()->route('penerima.create')
+            ->with('success', 'Akun berhasil dibuat! Selamat datang. Silakan lengkapi profil penerima Anda.');
     }
 
     public function dashboard()

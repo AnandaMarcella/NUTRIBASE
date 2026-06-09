@@ -13,6 +13,7 @@ class Tanggapan extends Model
         'feedback_id',
         'user_id',
         'isi_tanggapan',
+        'gambar',
     ];
 
     public function feedback(): BelongsTo
